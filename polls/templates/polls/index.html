@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Polls App</title>
+    </head>
+    <body>
+        <header>
+            <h1>Polls</h1>
+        </header>
+        <div>
+            {% if latest_question_list %}
+                <ul>
+                {% for question in latest_question_list %}
+                    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div><br>
+        <div>
+            <h1>Comments</h1>
+            <form action="/polls/add" method="POST">
+                {% csrf_token %}
+                <label for="comment">Add Comment:</label><br>
+                <input type="text" name="comment" id="comment"/><br>
+                <input type="submit" value="Submit comment">
+            </form><br>
+            <ul>
+                {% for comment in comments %}
+                    <li>{{ comment.comment_text | safe }}</a></li>
+                {% endfor %}
+                </ul>
+        </div>
+    </body>
+</html>
